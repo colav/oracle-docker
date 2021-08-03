@@ -11,7 +11,11 @@ To build the image run
 `
 ./buildContainerImage.sh -x -v 18.4.0 -t colav/oracle-docker:latest
 `
-
+To upload the image to docker hub
+`
+docker login 
+docker push colav/oracle-docker:latest
+`
 
 
 # Using  the dokcer image
@@ -40,7 +44,7 @@ In this step we are going to start the server, this could be a complicated proce
 
 Lets start the server running 
 `
-docker run --name oracle-server -p 1521:1521 -p 5500:5500 -e ORACLE_PWD=colavudea -v /var/lib/oracle/:/opt/oracle/oradata colav/oracle-docker
+docker run --name oracle-server -p 1521:1521 -p 5500:5500 -e ORACLE_PWD=colavudea -v /var/lib/oracle/:/var/lib/oracle colav/oracle-docker
 `
 
 call the next command to set the pass
@@ -64,6 +68,14 @@ https://www.oracle.com/database/technologies/appdev/python/quickstartpythononpre
 
 
 # import
+
+To import all in one shot please run
+
+`
+impdp system/colavudea@localhost:1521 directory=colav_dump_dir dumpfile=UDEA_20210304.dmp logfile=UDEA_20210304.log version=11.2.0.4.0
+
+`
+
 `
 impdp UDEA_GR/colavudea@localhost:1521 schemas=UDEA_GR directory=colav_pump_dir dumpfile=UDEA_20210304.dmp logfile=UDEA_20210304.log version=11.2.0.4.0
 
