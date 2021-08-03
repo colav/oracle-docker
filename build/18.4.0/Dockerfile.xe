@@ -20,6 +20,16 @@
 # ---------------
 FROM oraclelinux:7-slim
 
+# Modified by Grupo Colav to support Scienti DBs
+RUN yum -y reinstall  glibc-common.x86_64
+RUN yum -y install unzip libaio bc initscripts net-tools openssl compat-libstdc++-33 nano && \
+    rm -rf /var/cache/yum
+RUN localedef -i es_CO -f UTF-8 es_CO.UTF-8
+ENV LANG es_CO.UTF-8  
+ENV LANGUAGE es_CO:es  
+ENV LC_ALL es_CO.UTF-8
+ENV NLS_LANG SPANISH_COLOMBIA.WE8MSWIN1252
+
 # Labels
 # ------
 LABEL "provider"="Oracle"                                               \
