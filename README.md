@@ -2,9 +2,11 @@
 
 
 # Oracle Docker Colav
+Oracle docker Colav is a package that allows to deploy Oracle express 18.4 in a docker container to work with the Scientic database.
+With the package you can deploy your own instance of oracle, load the database dump provided by minciencias and extract the information rquired.
 
 We are providing an image already built, you dont have to build the image by your own.
-This is an easy way to deploy a Oracle dabase engine and load the scienti dump in a container
+This is an easy way to deploy a Oracle dabase engine, load the database dump provided by minciencias and extract the information rquired.
 
 ## Install docker compose
 
