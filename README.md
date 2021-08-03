@@ -22,6 +22,21 @@ docker push colav/oracle-docker:latest
 
 We are providing an image already built, you dont have to build the image by your own.
 
+## Install docker compose
+`
+sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+`
+
+## Statring with docker compose
+The first step is to edit the file config.env setting up there the required parameters.
+then run:
+`
+source config.env
+docker-compose up -d 
+`
+
+
 ## Downloading the official Colav Docker Image
 To download the image please run.
 `

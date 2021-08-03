@@ -54,6 +54,7 @@ ENV ORACLE_BASE=/opt/oracle \
     CONF_FILE="oracle-xe-18c.conf" \
     CHECK_SPACE_FILE="checkSpace.sh" \
     CHECK_DB_FILE="checkDBStatus.sh" \
+    LOAD_DUMP="loadDump.sh" \
     INSTALL_DIR="$HOME/install" \
     ORACLE_DOCKER_INSTALL="true"
 
@@ -62,7 +63,7 @@ ENV PATH=$ORACLE_HOME/bin:$PATH
 
 # Copy binaries
 # -------------
-COPY $CHECK_SPACE_FILE $RUN_FILE $PWD_FILE $CHECK_DB_FILE $CONF_FILE $INSTALL_DIR/
+COPY $CHECK_SPACE_FILE $RUN_FILE $PWD_FILE $CHECK_DB_FILE $CONF_FILE $LOAD_DUMP $INSTALL_DIR/
 
 RUN chmod ug+x $INSTALL_DIR/*.sh && \
     sync && \
@@ -80,9 +81,11 @@ RUN chmod ug+x $INSTALL_DIR/*.sh && \
     chown -R oracle:oinstall $ORACLE_BASE /home/oracle && \
     mv $INSTALL_DIR/$RUN_FILE $ORACLE_BASE/ && \
     mv $INSTALL_DIR/$PWD_FILE $ORACLE_BASE/ && \
+    mv $INSTALL_DIR/$LOAD_DUMP $ORACLE_BASE/ && \
     mv $INSTALL_DIR/$CHECK_DB_FILE $ORACLE_BASE/ && \
     mv $INSTALL_DIR/$CONF_FILE /etc/sysconfig/ && \
     ln -s $ORACLE_BASE/$PWD_FILE / && \
+    ln -s $ORACLE_BASE/$LOAD_DUMP / && \
     cd $HOME && \
     rm -rf $INSTALL_DIR && \
     chmod ug+x $ORACLE_BASE/*.sh

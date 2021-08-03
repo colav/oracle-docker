@@ -16,16 +16,9 @@ Usage: buildContainerImage.sh -v [version] -t [image_name:tag] [-e | -s | -x] [-
 Builds a container image for Oracle Database.
 
 Parameters:
-   -v: version to build
-       Choose one of: $(for i in */; do echo -n "${i%%/}  "; done)
    -t: image_name:tag for the generated docker image
-   -e: creates image based on 'Enterprise Edition'
-   -s: creates image based on 'Standard Edition 2'
-   -x: creates image based on 'Express Edition'
    -i: ignores the MD5 checksums
    -o: passes on container build option
-
-* select one edition only: -e, -s, or -x
 
 LICENSE UPL 1.0
 
@@ -118,10 +111,10 @@ MIN_PODMAN_VERSION="1.6.0"
 DOCKERFILE="Dockerfile"
 IMAGE_NAME=""
 
-if [ "$#" -eq 0 ]; then
-  usage;
-  exit 1;
-fi
+export EXPRESS=1
+export VERSION=18.4.0
+export EDITION="xe"
+export SKIPMD5=1
 
 while getopts "hesxiv:t:o:" optname; do
   case "${optname}" in
@@ -131,18 +124,6 @@ while getopts "hesxiv:t:o:" optname; do
       ;;
     "i")
       SKIPMD5=1
-      ;;
-    "e")
-      ENTERPRISE=1
-      ;;
-    "s")
-      STANDARD=1
-      ;;
-    "x")
-      EXPRESS=1
-      ;;
-    "v")
-      VERSION="${OPTARG}"
       ;;
     "t")
       IMAGE_NAME="${OPTARG}"
@@ -164,35 +145,15 @@ done
 # Check that we have a container runtime installed
 checkContainerRuntime
 
-# Which Edition should be used?
-if [ $((ENTERPRISE + STANDARD + EXPRESS)) -gt 1 ]; then
-  usage
-elif [ ${ENTERPRISE} -eq 1 ]; then
-  EDITION="ee"
-elif [ ${STANDARD} -eq 1 ]; then
-  EDITION="se2"
-elif [ ${EXPRESS} -eq 1 ]; then
-  if [ "${VERSION}" == "18.4.0" ]; then
-    EDITION="xe"
-    SKIPMD5=1
-  elif [ "${VERSION}" == "11.2.0.2" ]; then
-    EDITION="xe"
-    BUILD_OPTS=("--shm-size=1G" "${BUILD_OPTS[@]}")
-  else
-    echo "Version ${VERSION} does not have Express Edition available.";
-    exit 1;
-  fi;
-fi;
 
 # Which Dockerfile should be used?
-if [ "${VERSION}" == "12.1.0.2" ] || [ "${VERSION}" == "11.2.0.2" ] || [ "${VERSION}" == "18.4.0" ]; then
-  DOCKERFILE="${DOCKERFILE}.${EDITION}"
-fi;
+DOCKERFILE="${DOCKERFILE}.${EDITION}"
 
 # Oracle Database image Name
 # If provided using -t build option then use it; Otherwise, create with version and edition
 if [ -z "${IMAGE_NAME}" ]; then
-  IMAGE_NAME="oracle/database:${VERSION}-${EDITION}"
+  #IMAGE_NAME="colav/oracle-docker:${VERSION}-${EDITION}"
+  IMAGE_NAME="colav/oracle-docker:latest"
 fi;
 
 # Go into version folder

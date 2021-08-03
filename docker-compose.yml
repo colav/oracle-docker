@@ -1,0 +1,14 @@
+version: '2'
+services:
+  oracle-docker:
+    image: colav/oracle-docker-base:latest
+    volumes:
+      - ${DUMP_PATH}:/home/oracle/dump # dump path (where the file .dmp resides).
+    ports:
+      - 1521:1521
+      - 8080:8080
+      - 5500:5500
+    env_file:
+      - config.env   # WARNING!!!!  EDIT THIS FILE BEFORE LAUNCH!
+    environment:
+      - ORACLE_PWD=${PASSWORD}  

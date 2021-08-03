@@ -210,6 +210,15 @@ if [ $? -eq 0 ]; then
   # Execute custom provided startup scripts
   runUserScripts $ORACLE_BASE/scripts/startup
 
+  echo "#########################"
+  echo "LOADING DUMP!"
+  echo "#########################"
+  su -p oracle -c "mkdir -p /tmp/dump"
+  su -p oracle -c "cp -rf  /home/oracle/dump/* /tmp/dump/"
+  su -p oracle -c "$ORACLE_BASE/loadDump.sh"
+  su -p oracle -c "cp /tmp/dump/$DUMP_LOG_FILE /home/oracle/"
+  su -p oracle -c "rm -rf /tmp/dump"
+
 else
   echo "#####################################"
   echo "########### E R R O R ###############"
