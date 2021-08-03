@@ -1,7 +1,7 @@
 version: '2'
 services:
   oracle-docker:
-    image: colav/oracle-docker-base:latest
+    image: colav/oracle-docker:latest
     volumes:
       - ${DUMP_PATH}:/home/oracle/dump # dump path (where the file .dmp resides).
     ports:
