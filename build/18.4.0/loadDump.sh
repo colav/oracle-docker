@@ -32,7 +32,7 @@ create directory colav_pump_dir as '/tmp/dump';
 
 alter session set "_ORACLE_SCRIPT"=true;  
 create user $GRUPLAC_USER 
- identified by $PASSWORD
+ identified by $ORACLE_PWD
  default tablespace datos 
  temporary tablespace temp 
  profile default; 
@@ -50,7 +50,7 @@ grant read, write on directory colav_pump_dir to $GRUPLAC_USER;
 
 alter session set "_ORACLE_SCRIPT"=true;  
 create user $CVLAC_USER 
- identified by $PASSWORD
+ identified by $ORACLE_PWD
  default tablespace datos 
  temporary tablespace temp 
  profile default; 
@@ -68,7 +68,7 @@ grant read, write on directory colav_pump_dir to $CVLAC_USER;
 
 alter session set "_ORACLE_SCRIPT"=true;  
 create user $INSTITULAC_USER 
- identified by $PASSWORD
+ identified by $ORACLE_PWD
  default tablespace datos 
  temporary tablespace temp 
  profile default; 
@@ -85,7 +85,7 @@ grant read, write on directory colav_pump_dir to $INSTITULAC_USER;
 
 alter session set "_ORACLE_SCRIPT"=true;  
 create user CIENCIA 
- identified by $PASSWORD
+ identified by $ORACLE_PWD
  default tablespace datos 
  temporary tablespace temp 
  profile default; 
@@ -104,4 +104,4 @@ grant read, write on directory colav_pump_dir to CIENCIA;
 exit;
 EOF
 
-impdp system/$PASSWORD@localhost:1521 directory=colav_pump_dir dumpfile=$DUMP_FILE logfile=$DUMP_LOG_FILE version=11.2.0.4.0
+impdp system/$ORACLE_PWD@localhost:1521 directory=colav_pump_dir dumpfile=$DUMP_FILE logfile=$DUMP_LOG_FILE version=11.2.0.4.0

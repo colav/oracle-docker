@@ -6,9 +6,10 @@ services:
       - ${DUMP_PATH}:/home/oracle/dump # dump path (where the file .dmp resides).
     ports:
       - 1521:1521
-      - 8080:8080
       - 5500:5500
+      #- 8080:8080  # required by oracle apex (commented because we dont need apex)
+      - $HUNABKU_PORT:$HUNABKU_PORT
     env_file:
-      - config.env   # WARNING!!!!  EDIT THIS FILE BEFORE LAUNCH!
+      - config.env   # WARNING!!!!  CREATE THIS FILE BEFORE LAUNCH!
     environment:
-      - ORACLE_PWD=${PASSWORD}  
+      - ORACLE_PWD=${ORACLE_PWD}

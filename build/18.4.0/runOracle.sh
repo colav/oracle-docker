@@ -210,6 +210,7 @@ if [ $? -eq 0 ]; then
   # Execute custom provided startup scripts
   runUserScripts $ORACLE_BASE/scripts/startup
 
+
   echo "#########################"
   echo "LOADING DUMP!"
   echo "#########################"
@@ -218,6 +219,12 @@ if [ $? -eq 0 ]; then
   su -p oracle -c "$ORACLE_BASE/loadDump.sh"
   su -p oracle -c "cp /tmp/dump/$DUMP_LOG_FILE /home/oracle/"
   su -p oracle -c "rm -rf /tmp/dump"
+  ## hunabku have to be here, because the instance of the 
+  ## object is doing a query to the db to read the tables per db
+  echo "#########################"
+  echo "STARTING HUNABKU!"
+  echo "#########################"
+  su -p oracle -c "$ORACLE_BASE/runHunabku.sh"
 
 else
   echo "#####################################"
