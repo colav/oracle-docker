@@ -12,6 +12,9 @@ This is an easy way to deploy a Oracle dabase engine, load the database dump pro
 
 `
 sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+`
+
+`
 sudo chmod +x /usr/local/bin/docker-compose
 `
 
@@ -72,6 +75,7 @@ docker run --name oracle-server -p 1521:1521 -p 5500:5500 -e ORACLE_PWD=colavude
 `
 
 call the next command to set the pass
+
 ` 
 docker exec oracle-server /opt/oracle/setPassword.sh colavudea 
 `
@@ -188,7 +192,18 @@ impdp UDEA_CV/colavudea@localhost:1521 schemas=UDEA_CV directory=colav_pump_dir 
 impdp UDEA_IN/colavudea@localhost:1521 schemas=UDEA_IN directory=colav_pump_dir dumpfile=UDEA_20210304.dmp logfile=UDEA_20210304.log version=11.2.0.4.0
 `
 
+# Some errors
+in case of error
 
+`
+[WARNING] ORA-00821: Specified value of sga_target 1536M is too small, needs to be at least 4304M
+`
+
+it is bacuase free oracle only allows 1 cpu, you have to set cpu 1 in docker compose files or calling docker from command line.
+
+
+# Private docker image
+https://github.com/oracle/docker-images/issues/1527
 
 # License
 Colav codes under BSD-3-Clause License
