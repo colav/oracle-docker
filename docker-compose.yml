@@ -13,3 +13,5 @@ services:
       - config.env   # WARNING!!!!  CREATE THIS FILE BEFORE LAUNCH!
     environment:
       - ORACLE_PWD=${ORACLE_PWD}
+    mem_reservation: 8000M
+    cpuset: "0-7"
