@@ -25,6 +25,9 @@ then run:
 
 `
 source config.env
+`
+
+`
 docker-compose up -d 
 `
 
