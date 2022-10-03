@@ -140,13 +140,10 @@ sqlplus / as sysdba
 then run the next SQL command
 
 `
-select * from nls_database_parameters where parameter='NLS_CHARACTERSET';
+SQL> select * from nls_database_parameters where parameter='NLS_CHARACTERSET';
 `
 
 output should be like this:
-
-`
-SQL> select * from nls_database_parameters where parameter='NLS_CHARACTERSET';
 
 PARAMETER
 --------------------------------------------------------------------------------
@@ -154,7 +151,7 @@ VALUE
 ----------------------------------------------------------------
 NLS_CHARACTERSET
 WE8MSWIN1252
-`
+
 
 
 # Import manually the dump
