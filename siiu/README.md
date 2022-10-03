@@ -145,13 +145,14 @@ SQL> select * from nls_database_parameters where parameter='NLS_CHARACTERSET';
 
 output should be like this:
 
+`
 PARAMETER
 --------------------------------------------------------------------------------
 VALUE
 ----------------------------------------------------------------
 NLS_CHARACTERSET
 WE8MSWIN1252
-
+`
 
 
 # Import manually the dump
