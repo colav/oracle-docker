@@ -163,7 +163,6 @@ To import all in one shot please run inside the container
 
 `
 impdp system/$PASSWORD@localhost:1521 directory=colav_dump_dir dumpfile=expdp_bupp_12_mayo2022.dmp logfile=expdp_bupp_12_mayo2022.log version=11.2.0.4.0
-
 `
 
 ## Some errors
@@ -176,9 +175,9 @@ in case of error
 it is bacuase free oracle only allows 1 cpu, you have to set cpu 1 in docker compose files or calling docker from command line.
 
 `[WARNING] ORA-12954: This error gets triggered when the DB is greater than 12GB, you can add to the import comamnd:
-`tables="TABLE_SPACE_NAME.TABLE_NAME","TABLE_SPACE_NAME.TABLE_NAME"`, this includes those tables only or
-you can exclude tables that occupy too much space with `exclude=table:\"IN \'TABLE_NAME\'\"`,
-if you use either, then you must also include `data_options=skip_constraint_errors`
+tables="TABLE_SPACE_NAME.TABLE_NAME","TABLE_SPACE_NAME.TABLE_NAME", this includes those tables only or
+you can exclude tables that occupy too much space with exclude=table:\"IN \'TABLE_NAME\'\",
+if you use either, then you must also include `data_options=skip_constraint_errors
 `
 
 # Private docker image
