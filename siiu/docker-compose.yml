@@ -1,0 +1,15 @@
+version: '2'
+services:
+  oracle-docker:
+    image: danielxf007/oracle-docker:latest
+    volumes:
+      - ${DUMP_PATH}:/home/oracle/dump # dump path (where the file .dmp resides).
+    ports:
+      - 1521:1521
+      #- 8080:8080  # required by oracle apex (commented because we dont need apex)
+    env_file:
+      - config.env   # WARNING!!!!  CREATE THIS FILE BEFORE LAUNCH!
+    environment:
+      - ORACLE_PWD=${ORACLE_PWD}
+    mem_reservation: 8000M
+    cpuset: "0-1"
