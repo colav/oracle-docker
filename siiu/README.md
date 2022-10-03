@@ -172,13 +172,18 @@ in case of error
 [WARNING] ORA-00821: Specified value of sga_target 1536M is too small, needs to be at least 4304M
 `
 
-it is bacuase free oracle only allows 1 cpu, you have to set cpu 1 in docker compose files or calling docker from command line.
+it is because free oracle only allows 1 cpu, you have to set cpu 1 in docker compose files or calling docker from command line.
 
-`[WARNING] ORA-12954: This error gets triggered when the DB is greater than 12GB, you can add to the import comamnd:
+`
+[WARNING] ORA-12954: The request exceeds the maximum allowed database size of 12 GB
+`
+
+This error gets triggered for free oracle, you can add to the import comamnd:
+`
 tables="TABLE_SPACE_NAME.TABLE_NAME","TABLE_SPACE_NAME.TABLE_NAME", this includes those tables only or
 you can exclude tables that occupy too much space with exclude=table:\"IN \'TABLE_NAME\'\",
-if you use either, then you must also include `data_options=skip_constraint_errors
-`
+`, if you use either, then you must also include data_options=skip_constraint_errors
+
 
 # Private docker image
 https://github.com/oracle/docker-images/issues/1527
