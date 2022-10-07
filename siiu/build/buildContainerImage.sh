@@ -153,7 +153,7 @@ DOCKERFILE="${DOCKERFILE}.${EDITION}"
 # If provided using -t build option then use it; Otherwise, create with version and edition
 if [ -z "${IMAGE_NAME}" ]; then
   #IMAGE_NAME="colav/oracle-docker:${VERSION}-${EDITION}"
-  IMAGE_NAME="colav/siiu-oracle-docker"
+  IMAGE_NAME="colav/siiu-oracle-docker:latest"
 fi;
 
 # Go into version folder
