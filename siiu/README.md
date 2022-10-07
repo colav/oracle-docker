@@ -159,10 +159,10 @@ WE8MSWIN1252
 
 To import all in one shot please run inside the container
 
-`
+```
 impdp system/$PASSWORD@localhost:1521 directory=colav_dump_dir dumpfile=expdp_bupp_12_mayo2022.dmp logfile=expdp_bupp_12_mayo2022.log version=11.2.0.4.0
+```
 
-`
 
 ## Some errors
 in case of error
