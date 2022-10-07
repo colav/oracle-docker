@@ -34,7 +34,7 @@ ENV ORACLE_CHARACTERSET WE8MSWIN1252
 # Labels
 # ------
 LABEL "provider"="danielxf007"                                               \
-      "issues"="https://github.com/danielxf007/SIIU_Oracle_Docker"         \
+      "issues"="https://github.com/danielxf007/oracle-docker/tree/main/siiu"         \
       "volume.data"="/opt/oracle/oradata"                               \
       "volume.setup.location1"="/opt/oracle/scripts/setup"              \
       "volume.setup.location2"="/docker-entrypoint-initdb.d/setup"      \
