@@ -73,17 +73,19 @@ https://www.oracle.com/database/technologies/instant-client/linux-x86-64-downloa
 
 Run like root user:
 
-`
+```
 apt install libaio-dev alien
 cd /tmp/
 wget https://download.oracle.com/otn_software/linux/instantclient/211000/oracle-instantclient-basic-21.1.0.0.0-1.x86_64.rpm
+```
 
+```
 alien oracle-instantclient-basic-21.1.0.0.0-1.x86_64.rpm 
 dpkg -i oracle-instantclient-basic_21.1.0.0.0-2_amd64.deb
 https://download.oracle.com/otn_software/linux/instantclient/211000/oracle-instantclient-basic-21.1.0.0.0-1.x86_64.rpm
 cd /usr/lib/oracle/21/client64/lib/
 ldconfig
-`
+```
 check the example in the notebook folder.
 
 
