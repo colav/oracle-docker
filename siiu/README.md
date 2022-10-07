@@ -10,15 +10,15 @@ This is an easy way to deploy a Oracle dabase engine, load the database dump pro
 
 ## Install Docker
 
-1) `sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose`
-2) `sudo chmod +x /usr/local/bin/docker-compose`
-3) Follow the steps at [https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user] to work with the docker command as a non-root-user
+1. `sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose`
+2. `sudo chmod +x /usr/local/bin/docker-compose`
+3. Follow the steps at [https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user] to work with the docker command as a non-root-user
 
 ## Statring with docker compose
 
-1) Edit the config.env file, then use `source config.env`, if you do not do this, then docker will create a process where the variables inside the config.env do not exist.
-2) Execute `docker-compose up -d`
-3) Optional: you can see the progress with `docker-compose logs`
+1. Edit the config.env file, then use `source config.env`, if you do not do this, then docker will create a process where the variables inside the config.env do not exist.
+2. Execute `docker-compose up -d`
+3. Optional: you can see the progress with `docker-compose logs`
 
 # ADVANCED FOR DEVELOPERS
 
@@ -40,7 +40,6 @@ To upload the image to docker hub
 docker login 
 docker push colav/siiu-oracle-docker:latest
 `
-
 ## Downloading the official Colav Docker Image
 To download the image please run.
 `
@@ -100,10 +99,11 @@ pip3 install cx_oracle
 # CHECK SYSTEM CONFIG
 
 start the bash session inside the container
-
-1) `docker exec -it #container_id bash`
-2) `su oracle`
-
+`
+docker exec -it #container_id bash
+su oracle
+cd
+`
 Checking the locale config
 
 `
@@ -140,19 +140,21 @@ sqlplus / as sysdba
 then run the next SQL command
 
 `
-SQL> select * from nls_database_parameters where parameter='NLS_CHARACTERSET';
+select * from nls_database_parameters where parameter='NLS_CHARACTERSET';
 `
 
 output should be like this:
 
-```
+`
+SQL> select * from nls_database_parameters where parameter='NLS_CHARACTERSET';
+
 PARAMETER
 --------------------------------------------------------------------------------
 VALUE
 ----------------------------------------------------------------
 NLS_CHARACTERSET
 WE8MSWIN1252
-```
+`
 
 
 # Import manually the dump
@@ -161,6 +163,7 @@ To import all in one shot please run inside the container
 
 `
 impdp system/$PASSWORD@localhost:1521 directory=colav_dump_dir dumpfile=expdp_bupp_12_mayo2022.dmp logfile=expdp_bupp_12_mayo2022.log version=11.2.0.4.0
+
 `
 
 ## Some errors
@@ -170,18 +173,13 @@ in case of error
 [WARNING] ORA-00821: Specified value of sga_target 1536M is too small, needs to be at least 4304M
 `
 
-it is because free oracle only allows 1 cpu, you have to set cpu 1 in docker compose files or calling docker from command line.
+it is bacuase free oracle only allows 1 cpu, you have to set cpu 1 in docker compose files or calling docker from command line.
 
+`[WARNING] ORA-12954: This error gets triggered when the DB is greater than 12GB, you can add to the import comamnd:
+`tables="TABLE_SPACE_NAME.TABLE_NAME","TABLE_SPACE_NAME.TABLE_NAME"`, this includes those tables only or
+you can exclude tables that occupy too much space with `exclude=table:\"IN \'TABLE_NAME\'\"`,
+if you use either, then you must also include `data_options=skip_constraint_errors`
 `
-[WARNING] ORA-12954: The request exceeds the maximum allowed database size of 12 GB
-`
-
-This error gets triggered for free oracle, you can add to the import comamnd:
-`
-tables="TABLE_SPACE_NAME.TABLE_NAME","TABLE_SPACE_NAME.TABLE_NAME", this includes those tables only or
-you can exclude tables that occupy too much space with exclude=table:\"IN \'TABLE_NAME\'\",
-`, if you use either, then you must also include data_options=skip_constraint_errors
-
 
 # Private docker image
 https://github.com/oracle/docker-images/issues/1527
