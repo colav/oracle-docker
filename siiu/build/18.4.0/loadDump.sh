@@ -17,7 +17,7 @@ pctincrease 0
 permanent
 datafile
 '$dbf_file' size 50m
-autoextend on next 50m maxsize 14000m;
+autoextend on next 50m maxsize 4000m;
 exit;
 EOF
 }
@@ -70,8 +70,9 @@ EOF
 IFS=', ' read -r -a array <<< "$SIIU_TABLESPACES"
 for tablespace in "${array[@]}"
 do
-    echo "Creating Table Space: $tablespace"
+    echo "Creating TableSpace: $tablespace"
     createTablespace $tablespace
+    echo "The tablespace $tablespace was created with $? errors"
 done
 
 IFS=', ' read -r -a array <<< "$SIIU_USERS"
@@ -79,6 +80,7 @@ for user in "${array[@]}"
 do
     echo "Creating User: $user"
     createUser $user $ORACLE_PWD "BUPP"
+    echo "The user $user was created with $? errors"
 done
 
 IFS=', ' read -r -a array <<< "$DUMP_FILES"
@@ -87,6 +89,7 @@ do
     echo "Loading dump file $dump_file"
     impdp system/$ORACLE_PWD@localhost:1521 exclude=table:\"IN \'SIIU_ARCHIVO_ADJUNTO\'\"  \
     directory=siiu_pump_dir dumpfile=$dump_file data_options=skip_constraint_errors version=11.2.0.4.0
+    echo "The dump file $dump_file was created"
 done
 
 
