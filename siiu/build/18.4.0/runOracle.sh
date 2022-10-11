@@ -217,11 +217,6 @@ if [ $? -eq 0 ]; then
   su -p oracle -c "mkdir -p /tmp/dump"
   su -p oracle -c "cp -rf  /home/oracle/dump/* /tmp/dump/"
   su -p oracle -c "$ORACLE_BASE/loadDump.sh"
-  if [$? -eq 0]; then
-    echo "loadDump.sh ended with no errors"
-  else
-    echo "something went wrong while executing loadDump.sh"
-  fi;
   su -p oracle -c "cp /tmp/dump/$DUMP_LOG_FILE /home/oracle/"
   su -p oracle -c "rm -rf /tmp/dump"
 
