@@ -55,7 +55,6 @@ ENV ORACLE_BASE=/opt/oracle \
     CHECK_SPACE_FILE="checkSpace.sh" \
     CHECK_DB_FILE="checkDBStatus.sh" \
     LOAD_DUMP="loadDump.sh" \
-    RUN_HUNABKU="runHunabku.sh" \
     INSTALL_DIR="$HOME/install" \
     ORACLE_DOCKER_INSTALL="true"
 
@@ -64,7 +63,7 @@ ENV PATH=$ORACLE_HOME/bin:$PATH
 
 # Copy binaries
 # -------------
-COPY $CHECK_SPACE_FILE $RUN_FILE $PWD_FILE $CHECK_DB_FILE $CONF_FILE $LOAD_DUMP $RUN_HUNABKU $INSTALL_DIR/
+COPY $CHECK_SPACE_FILE $RUN_FILE $PWD_FILE $CHECK_DB_FILE $CONF_FILE $LOAD_DUMP $INSTALL_DIR/
 
 RUN chmod ug+x $INSTALL_DIR/*.sh && \
     sync && \
@@ -83,7 +82,6 @@ RUN chmod ug+x $INSTALL_DIR/*.sh && \
     mv $INSTALL_DIR/$RUN_FILE $ORACLE_BASE/ && \
     mv $INSTALL_DIR/$PWD_FILE $ORACLE_BASE/ && \
     mv $INSTALL_DIR/$LOAD_DUMP $ORACLE_BASE/ && \
-    mv $INSTALL_DIR/$RUN_HUNABKU $ORACLE_BASE/ && \
     mv $INSTALL_DIR/$CHECK_DB_FILE $ORACLE_BASE/ && \
     mv $INSTALL_DIR/$CONF_FILE /etc/sysconfig/ && \
     ln -s $ORACLE_BASE/$PWD_FILE / && \
@@ -93,12 +91,9 @@ RUN chmod ug+x $INSTALL_DIR/*.sh && \
     chmod ug+x $ORACLE_BASE/*.sh
 
 # Working in the support for hunabku
-RUN yum install -y oracle-nodejs-release-el7 oracle-release-el7
-RUN yum install -y python3-pip git nodejs && \
+RUN yum install -y oracle-release-el7
+RUN yum install -y python3-pip && \
     rm -rf /var/cache/yum
-
-RUN npm install -g apidoc@0.29.0
-RUN pip3 install git+https://github.com/colav/HunabKu@scienti
 
 HEALTHCHECK --interval=1m --start-period=5m \
    CMD "$ORACLE_BASE/$CHECK_DB_FILE" >/dev/null || exit 1
