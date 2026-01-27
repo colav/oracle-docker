@@ -108,6 +108,7 @@ for element in "${array[@]}"
 do
     echo "Loading dump file $element"
     impdp system/$ORACLE_PWD@localhost:1521 directory=colav_pump_dir dumpfile=$element version=11.2.0.4.0 
-    #logfile=$DUMP_LOG_FILE 
+    #logfile=$DUMP_LOG_FILE
 done
 
+echo "Finished loading dumps"

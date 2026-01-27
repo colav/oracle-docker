@@ -23,7 +23,10 @@ FROM oraclelinux:7-slim
 # Modified by Grupo Colav to support Scienti DBs
 RUN yum -y reinstall  glibc-common.x86_64
 RUN yum -y install unzip libaio bc initscripts net-tools openssl compat-libstdc++-33 nano && \
-    rm -rf /var/cache/yum
+    yum -y install python3-pip && \
+    yum -y install graphviz graphviz-devel && \
+    pip3 install --upgrade pip && \
+    pip3 install kaypacha
 RUN localedef -i es_CO -f UTF-8 es_CO.UTF-8
 ENV LANG es_CO.UTF-8  
 ENV LANGUAGE es_CO:es  
@@ -55,6 +58,7 @@ ENV ORACLE_BASE=/opt/oracle \
     CHECK_SPACE_FILE="checkSpace.sh" \
     CHECK_DB_FILE="checkDBStatus.sh" \
     LOAD_DUMP="loadDump.sh" \
+    EXTRACT_DATA="extractData.sh" \
     INSTALL_DIR="$HOME/install" \
     ORACLE_DOCKER_INSTALL="true"
 
@@ -63,7 +67,7 @@ ENV PATH=$ORACLE_HOME/bin:$PATH
 
 # Copy binaries
 # -------------
-COPY $CHECK_SPACE_FILE $RUN_FILE $PWD_FILE $CHECK_DB_FILE $CONF_FILE $LOAD_DUMP $INSTALL_DIR/
+COPY $CHECK_SPACE_FILE $RUN_FILE $PWD_FILE $CHECK_DB_FILE $CONF_FILE $LOAD_DUMP $EXTRACT_DATA $INSTALL_DIR/
 
 RUN chmod ug+x $INSTALL_DIR/*.sh && \
     sync && \
@@ -82,13 +86,14 @@ RUN chmod ug+x $INSTALL_DIR/*.sh && \
     mv $INSTALL_DIR/$RUN_FILE $ORACLE_BASE/ && \
     mv $INSTALL_DIR/$PWD_FILE $ORACLE_BASE/ && \
     mv $INSTALL_DIR/$LOAD_DUMP $ORACLE_BASE/ && \
+    mv $INSTALL_DIR/$EXTRACT_DATA $ORACLE_BASE/ && \
     mv $INSTALL_DIR/$CHECK_DB_FILE $ORACLE_BASE/ && \
     mv $INSTALL_DIR/$CONF_FILE /etc/sysconfig/ && \
     ln -s $ORACLE_BASE/$PWD_FILE / && \
     ln -s $ORACLE_BASE/$LOAD_DUMP / && \
     cd $HOME && \
     rm -rf $INSTALL_DIR && \
-    chmod ug+x $ORACLE_BASE/*.sh
+    chmod +x $ORACLE_BASE/*.sh
 
 # Working in the support for hunabku
 RUN yum install -y oracle-release-el7

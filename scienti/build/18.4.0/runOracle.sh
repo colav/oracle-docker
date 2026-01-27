@@ -222,6 +222,7 @@ if [ $? -eq 0 ]; then
     su -p oracle -c "cp -rf  /home/oracle/dump/$element /tmp/dump/"
   done
   su -p oracle -c "./$ORACLE_BASE/loadDump.sh"
+  su -p oracle -c "$ORACLE_BASE/extractData.sh"
   su -p oracle -c "cp /tmp/dump/$DUMP_LOG_FILE /home/oracle/"
   su -p oracle -c "rm -rf /tmp/dump"
 
