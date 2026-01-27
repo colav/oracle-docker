@@ -12,6 +12,7 @@ class DriveService:
         )
 
     def get_files(self, folder_id: str):
+        """Obtiene archivos con metadatos incluyendo fecha de creación."""
         return self.repo.list_files(folder_id)
 
     def download_file(self, file_id: str, dest: Path):

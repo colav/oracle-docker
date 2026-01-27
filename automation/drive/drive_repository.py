@@ -35,7 +35,7 @@ class GoogleDriveRepository:
 
             results = self.service.files().list(
                 q=query,
-                fields="files(id, name, mimeType, size)",
+                fields="files(id, name, mimeType, size, createdTime, modifiedTime)",
                 pageSize=100,
                 includeItemsFromAllDrives=True,
                 supportsAllDrives=True
